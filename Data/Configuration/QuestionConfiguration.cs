@@ -11,11 +11,10 @@ namespace Data.Configuration
             builder.ToTable("Question");
 
             builder.Property(t => t.QuestionId)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
-            builder.Property(t => t.Level)
+            builder.Property(t => t.LevelId)
                 .IsRequired();
-            builder.Property(t => t.Category)
+            builder.Property(t => t.CategoryId)
                 .IsRequired();
             builder.Property(t => t.Text)
                 .IsRequired()

@@ -11,7 +11,6 @@ namespace Data.Configuration
             builder.ToTable("Encouragement");
 
             builder.Property(t => t.Id)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
             builder.Property(t => t.Text)
                 .HasMaxLength(100)

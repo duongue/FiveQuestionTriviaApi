@@ -11,7 +11,6 @@ namespace Data.Configuration
             builder.ToTable("Category");
 
             builder.Property(t => t.CategoryId)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
             builder.Property(t => t.Description)
                 .IsRequired();

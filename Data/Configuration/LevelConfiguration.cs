@@ -11,7 +11,6 @@ namespace Data.Configuration
             builder.ToTable("Level");
 
             builder.Property(t => t.LevelId)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
             builder.Property(t => t.Description)
                 .IsRequired();
