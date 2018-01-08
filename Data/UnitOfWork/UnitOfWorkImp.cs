@@ -4,12 +4,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Repository;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.UnitOfWork
 {
     public class UnitOfWorkImp : IUnitOfWork
     {
-        private readonly FiveQuestionEntities context;
+        private readonly FiveQuestionEntities _context;
 
         private RepositoryImp<Category> categories;
         private RepositoryImp<Level> levels;
@@ -22,7 +23,7 @@ namespace Data.UnitOfWork
         {
             get
             {
-                this.categories = this.categories ?? new RepositoryImp<Category>(context);
+                this.categories = this.categories ?? new RepositoryImp<Category>(_context);
                 return this.categories;
             }
         }
@@ -30,7 +31,7 @@ namespace Data.UnitOfWork
         {
             get
             {
-                this.levels = this.levels ?? new RepositoryImp<Level>(context);
+                this.levels = this.levels ?? new RepositoryImp<Level>(_context);
                 return this.levels;
             }
         }
@@ -38,7 +39,7 @@ namespace Data.UnitOfWork
         {
             get
             {
-                this.questions = this.questions ?? new RepositoryImp<Question>(context);
+                this.questions = this.questions ?? new RepositoryImp<Question>(_context);
                 return this.questions;
             }
         }
@@ -46,14 +47,14 @@ namespace Data.UnitOfWork
         {
             get
             {
-                this.encouragements = this.encouragements ?? new RepositoryImp<Encouragement>(context);
+                this.encouragements = this.encouragements ?? new RepositoryImp<Encouragement>(_context);
                 return this.encouragements;
             }
         }
 
-        public UnitOfWorkImp()
+        public UnitOfWorkImp(FiveQuestionEntities context)
         {
-            context = new FiveQuestionEntities();
+            _context = context;
         }
 
         public void Dispose()
@@ -68,7 +69,7 @@ namespace Data.UnitOfWork
             {
                 if (disposing)
                 {
-                    this.context.Dispose();
+                    this._context.Dispose();
                 }
             }
             this.disposed = true;
@@ -76,12 +77,12 @@ namespace Data.UnitOfWork
 
         public int Save()
         {
-            return this.context.SaveChanges();
+            return this._context.SaveChanges();
         }
 
         public async Task<int> SaveAsync()
         {
-            return await this.context.SaveChangesAsync();
+            return await this._context.SaveChangesAsync();
         }
     }
 }
