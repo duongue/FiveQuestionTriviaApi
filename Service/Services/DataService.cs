@@ -5,6 +5,7 @@ using System.Text;
 using Domain;
 using System.Threading.Tasks;
 using Data.UnitOfWork;
+using System.Linq;
 
 namespace Service.Services
 {
@@ -19,6 +20,7 @@ namespace Service.Services
             return Task.Run(() => 
             {
                 Unit.Categories.Add(categoryToAdd);
+                Unit.Save();
             });
         }
 
@@ -27,6 +29,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Encouragements.Add(encouragementToAdd);
+                Unit.Save();
             });
         }
 
@@ -35,6 +38,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Levels.Add(levelToAdd);
+                Unit.Save();
             });
         }
 
@@ -43,6 +47,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Questions.Add(questionToAdd);
+                Unit.Save();
             });
         }
 
@@ -51,6 +56,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Categories.Delete(categoryToDelete);
+                Unit.SaveAsync();
             });
         }
 
@@ -59,6 +65,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Encouragements.Delete(encouragementToDelete);
+                Unit.SaveAsync();
             });
         }
 
@@ -67,6 +74,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Levels.Delete(levelToDelete);
+                Unit.SaveAsync();
             });
         }
 
@@ -75,6 +83,7 @@ namespace Service.Services
             return Task.Run(() =>
             {
                 Unit.Questions.Delete(questionToDelete);
+                Unit.SaveAsync();
             });
         }
 
@@ -95,7 +104,7 @@ namespace Service.Services
 
         public Task<IEnumerable<Question>> GetAllQuestionsAsync()
         {
-            return Unit.Questions.GetAsync();
+            return Unit.Questions.GetAsync(includeProperties:"Category,Level");
         }
 
         public Task<Category> GetCategoryByIdAsync(int id)
@@ -115,14 +124,16 @@ namespace Service.Services
 
         public Task<Question> GetQuestionsByIdAsync(int id)
         {
-            return Unit.Questions.GetByIdAsync(id);
+            var list = Unit.Questions.GetAsync(t => t.QuestionId == id, includeProperties: "Category,Level");
+            return Task.FromResult(list.Result.FirstOrDefault());
         }
 
         public Task UpdateCategoryAsync(Category categoryToUpdate)
         {
             return Task.Run(() =>
             {
-                Unit.Categories.Update(categoryToUpdate);
+                Unit.Categories.Update(categoryToUpdate.CategoryId, categoryToUpdate);
+                Unit.SaveAsync();
             });
         }
 
@@ -130,7 +141,8 @@ namespace Service.Services
         {
             return Task.Run(() =>
             {
-                Unit.Encouragements.Update(encouragementToUpdate);
+                Unit.Encouragements.Update(encouragementToUpdate.Id, encouragementToUpdate);
+                Unit.SaveAsync();
             });
         }
 
@@ -138,7 +150,8 @@ namespace Service.Services
         {
             return Task.Run(() =>
             {
-                Unit.Levels.Update(levelToUpdate);
+                Unit.Levels.Update(levelToUpdate.LevelId, levelToUpdate);
+                Unit.SaveAsync();
             });
         }
 
@@ -146,7 +159,8 @@ namespace Service.Services
         {
             return Task.Run(() =>
             {
-                Unit.Questions.Update(questionToUpdate);
+                Unit.Questions.Update(questionToUpdate.QuestionId, questionToUpdate);
+                Unit.SaveAsync();
             });
         }
     }
