@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +8,9 @@ using Web.Data;
 using Web.Models;
 using Web.Services;
 using Data;
+using Service.Contracts;
+using Service.Services;
+using Data.UnitOfWork;
 
 namespace Web
 {
@@ -39,6 +38,8 @@ namespace Web
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IUnitOfWork, UnitOfWorkImp>();
+            services.AddTransient<IDataService, DataService>();
 
             services.AddMvc();
         }
