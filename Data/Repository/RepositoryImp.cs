@@ -117,12 +117,18 @@ namespace Data.Repository
             return await this.DbContext.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public void Update(int id, T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
+            var entityToUpdate = this.DbSet.Find(id);
+            if (entityToUpdate == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            UpdateValues(entityToUpdate, entity);
         }
 
         public void UpdateValues(T oldEntity, T newEntity)

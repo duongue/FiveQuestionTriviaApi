@@ -24,7 +24,7 @@ namespace Data.Repository
 
         void Add(T entity);
 
-        void Update(T entity);
+        void Update(int id, T entity);
 
         void UpdateValues(T oldEntity, T newEntity);
 
