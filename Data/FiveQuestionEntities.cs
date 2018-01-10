@@ -16,10 +16,10 @@ namespace Data
         public FiveQuestionEntities(DbContextOptions<FiveQuestionEntities> options) : base(options)
         { }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Level> Levels { get; set; }
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<Encouragement> Encouragements { get; set; }
+        public DbSet<Domain.Category> Categories { get; set; }
+        public DbSet<Domain.Level> Levels { get; set; }
+        public DbSet<Domain.Question> Questions { get; set; }
+        public DbSet<Domain.Encouragement> Encouragements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

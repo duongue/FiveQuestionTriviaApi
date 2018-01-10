@@ -40,6 +40,7 @@ namespace Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUnitOfWork, UnitOfWorkImp>();
             services.AddTransient<IDataService, DataService>();
+            services.AddTransient<IEngineService, EngineService>();
 
             services.AddMvc();
         }

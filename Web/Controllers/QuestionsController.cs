@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Data;
 using Domain;
 using Service.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class QuestionsController : Controller
     {
         private readonly FiveQuestionEntities _context;

@@ -1,0 +1,13 @@
+{
+  "name": "skill",
+  "version": "0.0.0",
+  "description": "Skill",
+  "main": "app.js",
+  "author": {
+    "name": "duong"
+  },
+  "dependencies": {
+    "readline": "^1.3.0",
+    "request": "^2.83.0"
+  }
+}
